@@ -1,0 +1,22 @@
+{
+  "name": "item_ids",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leon-w/item_ids.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leon-w/item_ids/issues"
+  },
+  "homepage": "https://github.com/leon-w/item_ids#readme",
+  "dependencies": {
+    "request-promise-native": "^1.0.8"
+  }
+}
