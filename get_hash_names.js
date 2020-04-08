@@ -39,8 +39,8 @@ async function fetchAllHashNames() {
             page_idx++;
             await sleep(3000);
         } catch (err) {
-            console.log(`Faild to load page ${page_idx}. Retrying after 60s...`);
-            await sleep(60000);
+            console.log(`Faild to load page ${page_idx}. Retrying after 3min...`);
+            await sleep(3 * 60 * 1000);
         }
     }
     fs.writeFile("data/hash_names.txt", allNames.join("\n"), (err) => {
