@@ -43,13 +43,16 @@ async function fetchAllHashNames() {
             await sleep(3 * 60 * 1000);
         }
     }
+    try {
+        fs.mkdirSync("data");
+    } catch (err) {}
     fs.writeFile("data/hash_names.txt", allNames.join("\n"), (err) => {
-        if (err)  {
+        if (err) {
             console.error(err);
         } else {
             console.log("Saved names to  data/hash_names.txt");
         }
-    })
+    });
 }
 
 fetchAllHashNames();
