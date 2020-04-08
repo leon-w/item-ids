@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/leon-w/item_ids#readme",
   "dependencies": {
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.8"
   }
 }
