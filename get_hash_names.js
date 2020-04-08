@@ -29,10 +29,11 @@ let page_idx = 0;
 async function fetchAllHashNames() {
     while (true) {
         const names = await getPage(page_idx);
+        console.err("Loaded page", page_idx);
         names.forEach(name => console.log(name));
         if (names.length != 100) break;
         page_idx++;
-        await sleep(1000);
+        await sleep(4000);
     }
 }
 
