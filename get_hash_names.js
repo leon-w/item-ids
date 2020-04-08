@@ -1,4 +1,5 @@
 const http_request = require("request-promise-native");
+const fs = require("fs");
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -26,15 +27,29 @@ function getPage(page) {
 }
 
 let page_idx = 0;
+let allNames = [];
+
 async function fetchAllHashNames() {
     while (true) {
-        const names = await getPage(page_idx);
-        console.error("Loaded page", page_idx);
-        names.forEach(name => console.log(name));
-        if (names.length != 100) break;
-        page_idx++;
-        await sleep(4000);
+        try {
+            const names = await getPage(page_idx);
+            allNames.push(...names);
+            console.log("Loaded page", page_idx);
+            if (names.length != 100) break;
+            page_idx++;
+            await sleep(3000);
+        } catch (err) {
+            console.log(`Faild to load page ${page_idx}. Retrying after 60s...`);
+            await sleep(60000);
+        }
     }
+    fs.writeFile("data/hash_names.txt", allNames.join("\n"), (err) => {
+        if (err)  {
+            console.error(err);
+        } else {
+            console.log("Saved names to  data/hash_names.txt");
+        }
+    })
 }
 
 fetchAllHashNames();
