@@ -1,10 +1,11 @@
 # item_ids
 
-A programm to fetch the item ids of steam items that are needed to use the buyorder API.
+A program to fetch the item ids of steam items that are needed to use the buyorder API.
 
 Usage:
-1. `node get_hash_names.js`
-1. `node get_item_ids.js`
+1. `npm i`
+2. `node load.js`
+3. fill in the app id
 
 Results will get stored in the `data` folder.
 
