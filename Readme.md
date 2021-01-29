@@ -2,7 +2,7 @@
 
 A program to fetch the item ids of steam items that are needed to use the buyorder API.
 
-##Usage:
+## Usage:
 ```
 usage: load.js [-h] appId {both,names,ids}
 
