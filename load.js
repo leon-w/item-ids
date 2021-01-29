@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const inquirer = require("inquirer");
+const { ArgumentParser } = require("argparse");
 const superagent = require("superagent");
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
@@ -97,33 +97,23 @@ async function fetchIds(appId) {
     console.log(`Saved ${missingItems.length} new ids to ${dir}/ids.json`);
 }
 
-inquirer
-    .prompt([
-        {
-            type: "number",
-            message: "App ID",
-            name: "appId",
-        },
-        {
-            type: "list",
-            name: "action",
-            message: "What do you want to do?",
-            choices: ["Load both", "Load Names", "Load IDs"],
-        },
-    ])
-    .then(async answers => {
-        const appId = answers.appId;
+(async () => {
+    const parser = new ArgumentParser();
 
-        switch (answers.action) {
-            case "Load both":
-                await fetchHashNames(appId);
-                await fetchIds(appId);
-                break;
-            case "Load Names":
-                await fetchHashNames(appId);
-                break;
-            case "Load IDs":
-                await fetchIds(appId);
-                break;
-        }
-    });
+    parser.add_argument("appId", { help: "App ID of the game", type: Number });
+    parser.add_argument("mode", { help: "What data should be loaded", choices: ["both", "names", "ids"] });
+
+    const args = parser.parse_args();
+    switch (args.mode) {
+        case "both":
+            await fetchHashNames(args.appId);
+            await fetchIds(args.appId);
+            break;
+        case "names":
+            await fetchHashNames(args.appId);
+            break;
+        case "ids":
+            await fetchIds(args.appId);
+            break;
+    }
+})();

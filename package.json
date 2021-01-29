@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/leon-w/item_ids#readme",
   "dependencies": {
-    "inquirer": "^7.3.3",
+    "argparse": "^2.0.1",
     "superagent": "^6.1.0"
   }
 }
