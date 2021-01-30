@@ -77,8 +77,9 @@ async function fetchIds(appId) {
         let timeout = 3100;
         try {
             const html = (
-                await superagent.get(`https://steamcommunity.com/market/listings/${appId}/${encodeURI(hashName)}`)
+                await superagent.get(`https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`)
             ).text;
+            console.log()
             const id = /Market_LoadOrderSpread\(\s*(\d+)\s*\)/.exec(html)[1];
             itemIds[hashName] = id;
             try {
