@@ -77,10 +77,17 @@ async function fetchIds(appId) {
         let timeout = 3100;
         try {
             const html = (
-                await superagent.get(`https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`)
+                await superagent.get(
+                    `https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`
+                )
             ).text;
-            console.log()
-            const id = /Market_LoadOrderSpread\(\s*(\d+)\s*\)/.exec(html)[1];
+            console.log();
+            const match = /Market_LoadOrderSpread\(\s*(\d+)\s*\)/.exec(html);
+            if (match == null) {
+                console.error(`No id found for ${hashName}`);
+                continue;
+            }
+            const id = match[1];
             itemIds[hashName] = id;
             try {
                 fs.writeFileSync(`${dir}/ids.json`, JSON.stringify(itemIds, Object.keys(itemIds).sort(), 4));
