@@ -22,7 +22,7 @@ function exportIds(args) {
     let exportString = args.minify ? JSON.stringify(ids) : JSON.stringify(ids, null, 4);
 
     if (args.mode == "js") {
-        exportString = `const STEAM_ITEM_IDS = ${exportString};`;
+        exportString = `const STEAM_BUYORDER_IDS = ${exportString};`;
     }
 
     const file = args.output.includes(".") ? args.output : `${args.output}.${args.mode}`;
