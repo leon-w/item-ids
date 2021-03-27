@@ -3,6 +3,8 @@ const fs = require("fs");
 const { ArgumentParser } = require("argparse");
 const superagent = require("superagent");
 
+const appIdAliases = require("./appIdAliases.json");
+
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
 async function fetchHashNames(appId) {
@@ -108,10 +110,20 @@ async function fetchIds(appId) {
 (async () => {
     const parser = new ArgumentParser();
 
-    parser.add_argument("appId", { help: "App ID of the game", type: Number });
+    parser.add_argument("appId", { help: "App ID of the game or alias", type: String });
     parser.add_argument("mode", { help: "What data should be loaded", choices: ["both", "names", "ids"] });
 
     const args = parser.parse_args();
+
+    if (isNaN(args.appId)) {
+        if (args.appId in appIdAliases) {
+            args.appId = appIdAliases[args.appId];
+        } else {
+            console.error(`Unknown appId alias "${args.appId}" (available: ${Object.keys(appIdAliases).join("|")})`);
+            return;
+        }
+    }
+
     switch (args.mode) {
         case "both":
             await fetchHashNames(args.appId);
