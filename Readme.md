@@ -7,7 +7,7 @@ A program to fetch the item ids of steam items that are needed to use the buyord
 usage: load.js [-h] appId {both,names,ids}
 
 positional arguments:
-  appId             App ID of the game
+  appId             App ID of the game or alias
   {both,names,ids}  What data should be loaded
 
 optional arguments:
