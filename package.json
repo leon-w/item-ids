@@ -1,18 +1,18 @@
 {
-  "name": "item_ids",
+  "name": "item-ids",
   "version": "2.0.0",
   "description": "",
   "main": "load.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leon-w/item_ids.git"
+    "url": "git+https://github.com/leon-w/item-ids.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/leon-w/item_ids/issues"
+    "url": "https://github.com/leon-w/item-ids/issues"
   },
-  "homepage": "https://github.com/leon-w/item_ids#readme",
+  "homepage": "https://github.com/leon-w/item-ids#readme",
   "dependencies": {
     "argparse": "^2.0.1",
     "superagent": "^6.1.0"
