@@ -25,7 +25,7 @@ async function fetchHashNames(appId) {
             ).body;
 
             allNames.push(...pageData.results.map(x => x.hash_name));
-            if (pageData.start + pageData.pagesize >= pageData.total_count || page == 2) {
+            if (pageData.start + pageData.pagesize >= pageData.total_count) {
                 console.log("Loaded all names.")
                 break;
             }
