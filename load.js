@@ -25,14 +25,15 @@ async function fetchHashNames(appId) {
             ).body;
 
             allNames.push(...pageData.results.map(x => x.hash_name));
-            if (pageData.start + pageData.pagesize >= pageData.total_count) {
+            const totalCount = pageData.total_count || Infinity;
+            if (pageData.start + pageData.pagesize >= totalCount) {
                 console.log("Loaded all names.")
                 break;
             }
 
             if (page == 0) {
-                const totalPages = Math.ceil(pageData.total_count / 100);
-                console.log(`Loading names for app id ${appId}. ${pageData.total_count} items, ~${totalPages} pages`);
+                const totalPages = Math.ceil(totalCount / 100);
+                console.log(`Loading names for app id ${appId}. ${totalCount} items, ~${totalPages} pages`);
             }
 
             console.log(`Loaded page ${page}.`);
@@ -75,7 +76,6 @@ async function fetchIds(appId) {
                     `https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`
                 )
             ).text;
-            console.log();
             const match = /Market_LoadOrderSpread\(\s*(\d+)\s*\)/.exec(html);
             if (match == null) {
                 console.error(`No id found for ${hashName}.`);
