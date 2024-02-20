@@ -3,16 +3,13 @@
 A program to fetch the item ids of steam items that are needed to use the buyorder API.
 
 ## Usage:
+
 ```
-usage: load.js [-h] appId
-
-positional arguments:
-  appId       App ID of the game or alias
-
-optional arguments:
-  -h, --help  show this help message and exit
+node load.js <appId>
 ```
 
 Results will get stored in the `data` folder.
 
-*Speed: ~ 240 ids/h*
+Load ids from `https://raw.githubusercontent.com/leon-w/item-ids/master/dist/all_ids.json`
+
+_Speed: ~ 240 ids/h_

@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import { readdirSync, readFileSync, writeFileSync } from "fs";
+import { basename, join } from "path";
 
 function exportIds() {
     const ids = {};
@@ -7,10 +7,10 @@ function exportIds() {
     let totalIds = 0;
     let apps = 0;
 
-    for (const file of fs.readdirSync("data")) {
-        const appId = path.basename(file, ".json");
+    for (const file of readdirSync("data")) {
+        const appId = basename(file, ".json");
         try {
-            ids[appId] = JSON.parse(fs.readFileSync(path.join("data", file)));
+            ids[appId] = JSON.parse(readFileSync(join("data", file)));
             totalIds += Object.keys(ids[appId]).length;
             apps++;
         } catch (e) {
@@ -18,8 +18,7 @@ function exportIds() {
         }
     }
 
-    const exportString = JSON.stringify(ids);
-    fs.writeFileSync("dist/all_ids.json", exportString);
+    writeFileSync("dist/all_ids.json", JSON.stringify(ids));
     console.log(`Exported ${totalIds} ids from ${apps} apps.`);
 }
 
