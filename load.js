@@ -54,6 +54,7 @@ async function fetchIds(appId) {
 
     const missingItems = hashNames.filter(x => !(x in itemIds));
     const missingCount = missingItems.length;
+    let newIds = 0;
 
     console.log(`Fetching ${missingItems.length} new ids...`);
 
@@ -63,6 +64,9 @@ async function fetchIds(appId) {
             const response = await fetch(
                 `https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`
             );
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
             const html = await response.text();
 
             const match = /Market_LoadOrderSpread\(\s*(\d+)\s*\)/.exec(html);
@@ -73,6 +77,7 @@ async function fetchIds(appId) {
 
             const id = match[1].trim();
             itemIds[hashName] = id;
+            newIds++;
 
             try {
                 writeFileSync(outputFile, JSON.stringify(itemIds, Object.keys(itemIds).sort(), 4));
@@ -89,7 +94,7 @@ async function fetchIds(appId) {
             await sleep(5 * 60 * 1000);
         }
     }
-    console.log(`Saved ${missingItems.length} new ids to ${outputFile}.`);
+    console.log(`Saved ${newIds} new ids to ${outputFile}.`);
 }
 
 async function main() {
