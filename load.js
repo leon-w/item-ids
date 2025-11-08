@@ -103,18 +103,29 @@ async function main() {
         rust: 252490,
     };
 
-    let appIdArg = process.argv[2];
+    // Slice off the first two CLI args (node and script path)
+    const args = process.argv.slice(2);
 
-    if (isNaN(appIdArg)) {
-        if (appIdArg in appIds) {
-            appIdArg = appIds[appIdArg];
-        } else {
-            console.error(`Invalid appId '${appIdArg}'`);
-            process.exit(1);
-        }
+    if (args.length === 0) {
+        console.error("Please provide at least one appId or alias (e.g. 'cs2 rust 12345').");
+        process.exit(1);
     }
 
-    await fetchIds(appIdArg);
+    const resolvedAppIds = args.map(arg => {
+        if (!isNaN(arg)) {
+            return Number(arg);
+        } else if (arg in appIds) {
+            return appIds[arg];
+        } else {
+            console.error(`Invalid appId or alias '${arg}'`);
+            process.exit(1);
+        }
+    });
+
+    // Run fetchIds for each appId sequentially (await each)
+    for (const id of resolvedAppIds) {
+        await fetchIds(id);
+    }
 }
 
 await main();
