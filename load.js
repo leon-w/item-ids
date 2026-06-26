@@ -62,7 +62,12 @@ async function fetchIds(appId) {
         const hashName = missingItems[i];
         try {
             const response = await fetch(
-                `https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`
+                `https://steamcommunity.com/market/listings/${appId}/${encodeURIComponent(hashName)}`,
+                {
+                    headers: {
+                        Cookie: "bMarketOptOut=1;",
+                    },
+                },
             );
             if (!response.ok) {
                 throw new Error(response.statusText);
